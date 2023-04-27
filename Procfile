@@ -1,0 +1,1 @@
+web:gunicorn app:app #first app is for app.py  and second one is for app=Flask(__name__)
