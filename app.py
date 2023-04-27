@@ -31,6 +31,16 @@ def predict_api():
     output=regmodel.predict(new_data)
     print(output[0]) #since it is a 2D array so i am taking the first value 
     return jsonify(output[0])
+
+
+@app.route('/predict',methods=['POST'])
+def predict():
+    data=[float(x) for x in request.form.values()] #imported from flask(⭐whatever values we fill in this form it automatically capture it fro the request object )
+    final_input=scaler.transform(np.array(data).reshape(1,-1))
+    print(final_input)
+    output=regmodel.predict(final_input)[0]
+    #this below renders in html and in this html file there may be some placeholder so it replace it with this placeholder
+    return render_template("home.html",prediction_text="The predicted House price is {}".format(output)) # the position where prediction_text is written in html file it prints the output there
 #for running it
 if __name__=="__main__":
     app.run(debug=True) #it runs in debug mode 
